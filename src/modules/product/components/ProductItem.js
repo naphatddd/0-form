@@ -1,4 +1,5 @@
 import React from 'react'
+import {useRouteMatch,useHistory} from 'react-router-dom'
 import {
   Grid,
   Chip,
@@ -18,11 +19,14 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
 }))
-function ProductItem({ _id, name, price, category, desc, image }) {
+function ProductItem({ id, name, price, category, desc, image }) {
   const classes = useStyles()
+  const {path} = useRouteMatch()
+  const history = useHistory()
+  const navigateToDetails = () => history.push(`${path}/${id}`)
   return (
     <Grid item xs={12} sm={6} lg={4}>
-      <Card>
+      <Card onClick={navigateToDetails}>
         <CardActionArea>
           <CardMedia image={image} title={name} className={classes.media} />
           <CardContent>

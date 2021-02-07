@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useParams, useHistory } from 'react-router-dom'
 import { Paper, Grid, Typography, ButtonGroup, Button } from '@material-ui/core'
 import { useTheme } from '@material-ui/core/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
@@ -14,23 +15,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 function ProductDetails() {
-  const id = 5
+  const { id } = useParams()
+  const history = useHistory()
   const [product, setProduct] = useState([])
   const theme = useTheme()
   const isMediumUp = useMediaQuery(theme.breakpoints.up('md'))
   useEffect(() => {
     const loadProduct = async () => {
-      const { data } = await axios.get(
-        `https://react-api-six.vercel.app/products/${id}`
-      )
+      const { data } = await axios.get(`/products/${id}`)
       setProduct(data)
     }
     loadProduct()
-  }, [])
+  }, [id])
+  const byeNow = () => history.push('/cart')
   const classes = useStyles()
   return (
     <Paper className={classes.title}>
-      <Grid container spacing={2} className={isMediumUp ? 'flex-start' : 'center'}>
+      <Grid
+        container
+        spacing={2}
+        className={isMediumUp ? 'flex-start' : 'center'}
+      >
         <Grid item>
           <img src={product.image} alt={product.name} />
         </Grid>
@@ -49,7 +54,7 @@ function ProductDetails() {
             </Grid>
             <Grid item>
               <ButtonGroup variant="contained" color="primary" size="small">
-                <Button>Bye Now</Button>
+                <Button onClick={byeNow}>Bye Now</Button>
                 <Button>Add To Cart</Button>
               </ButtonGroup>
             </Grid>

@@ -14,7 +14,7 @@ import {
 } from '@material-ui/icons'
 const CATEGORIES = [
   {
-    title: 'Headset',
+    title: 'Headphone',
     Icon: Headset,
   },
   {
@@ -22,7 +22,7 @@ const CATEGORIES = [
     Icon: Watch,
   },
   {
-    title: 'CameraAlt',
+    title: 'Camera',
     Icon: CameraAlt,
   },
   {
@@ -38,11 +38,11 @@ const CATEGORIES = [
     Icon: Book,
   },
   {
-    title: 'InvertColors',
+    title: 'Lotion',
     Icon: InvertColors,
   },
   {
-    title: 'Visibility',
+    title: 'Eyeglass',
     Icon: Visibility,
   },
 ]

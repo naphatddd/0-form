@@ -1,13 +1,16 @@
 import React from 'react'
+import { Button } from '@material-ui/core'
 import {
-  Card,
+  TextField,
   CardActions,
+  Card,
   CardContent,
   Typography,
-  TextField,
-  Button,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
+import { useForm } from 'react-hook-form'
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -19,36 +22,60 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
   },
 }))
+
+
 function Delivery() {
   const classes = useStyles()
+  const { register, handleSubmit, errors } = useForm({
+    mode: 'onBlur',
+    resolver: yupResolver(
+      yup.object().shape({
+        name: yup.string().required(),
+        email: yup.string().email().required(),
+        address: yup.string().required(),
+      })
+    ),
+  })
+  const submit = (deliveryInfo) => {
+    console.log(deliveryInfo)
+  }
   return (
-    <form autoComplete="off">
+    <form onSubmit={handleSubmit(submit)} autoComplete="off">
       <Card>
         <CardContent className={classes.form}>
           <Typography>Order Informations</Typography>
           <TextField
+            inputRef={register}
             variant="outlined"
             label="name"
             placeholder="Enter your name"
             name="name"
             fullWidth
+            helperText={errors.name?.message || ''}
+            error={!!errors.name}
           />
-          <TextField
+           <TextField
+            inputRef={register}
             type="email"
             variant="outlined"
-            label="email"
-            placeholder="Enter your Email"
             name="email"
+            label="email"
+            placeholder="Enter Your Email"
             fullWidth
+            helperText={errors.email?.message || ''}
+            error={!!errors.email}
           />
           <TextField
+            inputRef={register}
             multiline
             rows={4}
             variant="outlined"
             label="address"
             placeholder="Enter your address"
-            name="email"
+            name="address"
             fullWidth
+            helperText={errors.address?.message || ''}
+            error={!!errors.address}
           />
           <CardActions>
             <Button

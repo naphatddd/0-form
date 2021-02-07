@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link as RouterLink, useHistory } from 'react-router-dom'
 import {
   AppBar,
   Toolbar,
@@ -24,28 +25,37 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   textC: {
-      textTransform: 'uppercase',
-      letterSpacing: theme.spacing(1),
-      '&:hover': {
-          color: theme.palette.secondary.dark
-      }
-  }
+    textTransform: 'uppercase',
+    letterSpacing: theme.spacing(1),
+    '&:hover': {
+      color: theme.palette.secondary.dark,
+    },
+  },
 }))
 function Header() {
   const classes = useStyles()
+  const history = useHistory()
+  const navigateToCart = () => history.push('/cart')
   return (
     <>
       <AppBar>
         <Toolbar>
           <Link
-            href="/"
+            component={RouterLink}
+            to="/"
             color="inherit"
             underline="none"
             className={classes.logoLink}
           >
             <img src={logo} alt="Naphat" className={classes.logoImage} />
           </Link>
-          <Link href="/products" color="inherit" underline="none" className={classes.textC}>
+          <Link
+            component={RouterLink}
+            to="/products"
+            color="inherit"
+            underline="none"
+            className={classes.textC}
+          >
             Products
           </Link>
           <div className={classes.spacer}></div>
@@ -53,7 +63,7 @@ function Header() {
             control={<Switch color="secondary"></Switch>}
             label="Dark"
           ></FormControlLabel>
-          <IconButton color="inherit">
+          <IconButton onClick={navigateToCart} color="inherit">
             <Badge badgeContent={5} color="secondary">
               <ShoppingCart></ShoppingCart>
             </Badge>
